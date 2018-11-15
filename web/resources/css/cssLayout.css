@@ -1,3 +1,7 @@
+.wrapper{
+    background-color: #dddddd;
+
+}
 
 #top {
     position: relative;
@@ -30,8 +34,9 @@
 
 .center_content {
     position: relative;
-    background-color: #dddddd;
     padding: 5px;
+    margin: 50px auto;
+    text-align: center;
 }
 
 .left_content {
@@ -59,3 +64,59 @@
 }
 
 
+.centerme {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  flex-flow: column;
+}
+
+.wrapper{
+    background-color: #fdfdfd;
+    padding-bottom: 50px;
+}
+
+.feed-item{
+    background-color: #fff;
+    border: 2px solid #000;
+    border-radius: 7px;
+    margin-bottom: 20px;
+}
+
+.form-signin {
+  width: 100%;
+  max-width: 330px;
+  padding: 15px;
+  margin: auto;
+}
+.form-signin .checkbox {
+  font-weight: 400;
+}
+.form-signin .form-control {
+  position: relative;
+  box-sizing: border-box;
+  height: auto;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="email"] {
+  margin-bottom: 0px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 0px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.card{
+    display: inline-block !important;
+    
+}
