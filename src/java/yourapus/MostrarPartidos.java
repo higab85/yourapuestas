@@ -16,7 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet(name = "MostrarPartidos", urlPatterns = {"/MostrarPartidos"})
 public class MostrarPartidos extends HttpServlet {
-
+    private static final int MOSTRAR_PARTIDOS=1;
+    private static final int MOSTRAR_PARTIDOS_EQUIPO=2;
+    private static final int MOSTRAR_PARTIDOS_TENIS=3;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -29,7 +31,27 @@ public class MostrarPartidos extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        
+        int opcion;
+        
         try (PrintWriter out = response.getWriter()) {
+            
+            opcion = Integer.parseInt(request.getParameter("opcion"));
+            
+            switch(opcion){
+            
+                case MOSTRAR_PARTIDOS:
+                    mostrarPartidos(request,response);
+                    break;
+                case MOSTRAR_PARTIDOS_EQUIPO:
+                    mostrarPartidosEquipo(request,response);
+                    break;
+                case MOSTRAR_PARTIDOS_TENIS:
+                    mostrarPartidosTenis(request,response);
+                    break;
+                    
+            }
+            
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
@@ -81,5 +103,17 @@ public class MostrarPartidos extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    private void mostrarPartidos(HttpServletRequest request, HttpServletResponse response) {
+        
+    }
+
+    private void mostrarPartidosEquipo(HttpServletRequest request, HttpServletResponse response) {
+        
+    }
+
+    private void mostrarPartidosTenis(HttpServletRequest request, HttpServletResponse response) {
+        
+    }
 
 }
