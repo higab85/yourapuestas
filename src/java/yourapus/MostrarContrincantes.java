@@ -6,6 +6,7 @@
 package yourapus;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import javax.servlet.RequestDispatcher;
@@ -15,9 +16,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
-@WebServlet(name = "MostrarPartidos", urlPatterns = {"/MostrarPartidos"})
-public class MostrarPartidos extends HttpServlet {
+/**
+ *
+ * @author bear
+ */
+@WebServlet(name = "MostrarContrincantes", urlPatterns = {"/MostrarContrincantes"})
+public class MostrarContrincantes extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,41 +35,21 @@ public class MostrarPartidos extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
         Contrincante barsa = new Contrincante("barsa");
-        Contrincante real = new Contrincante("real madrid");
+        Contrincante aleti = new Contrincante("aleti");
         Contrincante betis = new Contrincante("betis");
-        
-        Partido juegoClasico = new Partido(barsa, real);
-        Partido juegoRealbetis = new Partido(real, betis);
-        
-        Precios bwinClasico = new Precios("0.15", "0.34", "1.00", "bwin");
-        Precios bet360Clasico = new Precios("0.10", "0.36", "0.09", "bet360");
-        Precios casinoClasico = new Precios("1.16", "0.03", "1.40", "casino");
-        ArrayList<Precios> casasClasico = new ArrayList<Precios>(
-            Arrays.asList(bwinClasico, bet360Clasico, casinoClasico)
-        );
-        
-        Precios bwinRealbetis = new Precios("0.18", "0.32", "0.54", "bwin");
-        Precios bet360Realbetis = new Precios("0.20", "0.09", "0.19", "bet360");
-        Precios casinoRealbetis = new Precios("1.15", "1.54", "0.69", "casino");
-        ArrayList<Precios> casasRealbetis = new ArrayList<Precios>(
-            Arrays.asList(bwinRealbetis, bet360Realbetis, casinoRealbetis)
-        );
-        
-        Listing clasico = new Listing(juegoClasico, casasClasico);
-        Listing realbetis = new Listing(juegoRealbetis, casasRealbetis);
- 
+        Contrincante rayo = new Contrincante("rayo");
 
-        ArrayList<Listing> partidos = new ArrayList<Listing>(
-            Arrays.asList(clasico, realbetis));
-     
+        ArrayList<Contrincante> contrincantes = new ArrayList<Contrincante>(
+            Arrays.asList(barsa, aleti, betis, rayo));
 
-        getServletContext().setAttribute("partidos", partidos);
-
+        getServletContext().setAttribute("contrincantes", contrincantes);
         
-        RequestDispatcher rd = request.getRequestDispatcher("/faces/partidos.xhtml");
+        RequestDispatcher rd = request.getRequestDispatcher("/faces/contrincantes.xhtml");
         rd.forward(request, response);
+
+
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

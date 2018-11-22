@@ -9,71 +9,32 @@
 
             <ui:define name="content">
                 <div class="centerme feed">
-                    <div class="feed-item">
-                        <table class="table table-hover">
-                            <thead class="thead-dark">
-                              <tr>
-                                <th scope="col">Casa</th>
-                                <th scope="col">Barca</th>
-                                <th scope="col">vs</th>
-                                <th scope="col">Real</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <th scope="row">Betwin</th>
-                                <td>0.1</td>
-                                <td>0.23</td>
-                                <td>0.54</td>
-                              </tr>
-                              <tr>
-                                <th scope="row">Indian Cashino</th>
-                                <td>0.1</td>
-                                <td>0.23</td>
-                                <td>0.04</td>
-                              </tr>
-                              <tr>
-                                <th scope="row">Juega y Gana</th>
-                                <td>0.414</td>
-                                <td>0.412</td>
-                                <td>0.4122</td>
-                              </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                                        <div class="feed-item">
-                        <table class="table table-hover">
-                            <thead class="thead-dark">
-                              <tr>
-                                <th scope="col">Casa</th>
-                                <th scope="col">Barca</th>
-                                <th scope="col">vs</th>
-                                <th scope="col">Real</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <th scope="row">Betwin</th>
-                                <td>0.1</td>
-                                <td>0.23</td>
-                                <td>0.54</td>
-                              </tr>
-                              <tr>
-                                <th scope="row">Indian Cashino</th>
-                                <td>0.1</td>
-                                <td>0.23</td>
-                                <td>0.04</td>
-                              </tr>
-                              <tr>
-                                <th scope="row">Juega y Gana</th>
-                                <td>0.414</td>
-                                <td>0.412</td>
-                                <td>0.4122</td>
-                              </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                    <ui:repeat var="item" value="${application.getAttribute('partidos')}" > 
+                        <div class="feed-item">
+                            <table class="table table-hover">
+                                <thead class="thead-dark">
+                                  <tr>
+                                    <th scope="col">Casa apus</th>
+                                    <th scope="col">#{item.partido.contrincante1.nombre}</th>
+                                    <th scope="col">vs</th>
+                                    <th scope="col">#{item.partido.contrincante2.nombre}</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                    <ui:repeat var="casa" value="#{item.casasDeApuestas}" > 
+                                  <tr>
+                                    <th scope="row">#{casa.nombreCasaDeApuestas}</th>
+                                    <td>#{casa.ganaVisitante}</td>
+                                    <td>#{casa.empate}</td>
+                                    <td>#{casa.ganaLocal}</td>
+                                  </tr>
+                                    </ui:repeat>
+                                </tbody>
+                            </table>
+                        </div>
+                    </ui:repeat>
                 </div>
+                
             </ui:define>
 
         </ui:composition>

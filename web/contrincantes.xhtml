@@ -1,36 +1,28 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+    xmlns:h="http://xmlns.jcp.org/jsf/html">
 
     <body>
 
-        <ui:composition template="./base.xhtml">
-
+        <ui:decorate template="base.xhtml">
+            
             <ui:define name="content">
-                <div class="contrincantes">
+                <ui:repeat var="item" value="${application.getAttribute('contrincantes')}" > 
                     <div class="card" style="width: 18rem;">
                         <div class="card-body">
-                          <h5 class="card-title">Barsa</h5>
-                          <p class="card-text">Equipo esquisito</p>
+                          <h5 class="card-title">#{item.nombre}</h5>
                           <a href="#" class="btn btn-primary">Ver partidos</a>
                           <a href="#" class="btn btn-secondary"> Marcar favorito</a>
+                        </div>
+                      </div>
+                </ui:repeat>
 
-                        </div>
-                      </div>
-                    <div class="card" style="width: 18rem;">
-                        
-                        <div class="card-body">
-                          <h5 class="card-title">Real Madrid</h5>
-                          <p class="card-text">Los blanquitos</p>
-                          <a href="#" class="btn btn-primary">Ver partidos</a>
-                          <a href="#" class="btn btn-secondary"> Marcar favorito</a>
-                        </div>
-                      </div>
-                </div>
             </ui:define>
 
-        </ui:composition>
+        </ui:decorate>
 
     </body>
 </html>
