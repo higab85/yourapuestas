@@ -29,39 +29,10 @@ public class MostrarPartidos extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("text/html;charset=UTF-8");     
 
-        Contrincante barsa = new Contrincante("barsa");
-        Contrincante real = new Contrincante("real madrid");
-        Contrincante betis = new Contrincante("betis");
-        
-        Partido juegoClasico = new Partido(barsa, real);
-        Partido juegoRealbetis = new Partido(real, betis);
-        
-        Precios bwinClasico = new Precios("0.15", "0.34", "1.00", "bwin");
-        Precios bet360Clasico = new Precios("0.10", "0.36", "0.09", "bet360");
-        Precios casinoClasico = new Precios("1.16", "0.03", "1.40", "casino");
-        ArrayList<Precios> casasClasico = new ArrayList<Precios>(
-            Arrays.asList(bwinClasico, bet360Clasico, casinoClasico)
-        );
-        
-        Precios bwinRealbetis = new Precios("0.18", "0.32", "0.54", "bwin");
-        Precios bet360Realbetis = new Precios("0.20", "0.09", "0.19", "bet360");
-        Precios casinoRealbetis = new Precios("1.15", "1.54", "0.69", "casino");
-        ArrayList<Precios> casasRealbetis = new ArrayList<Precios>(
-            Arrays.asList(bwinRealbetis, bet360Realbetis, casinoRealbetis)
-        );
-        
-        Listing clasico = new Listing(juegoClasico, casasClasico);
-        Listing realbetis = new Listing(juegoRealbetis, casasRealbetis);
- 
-
-        ArrayList<Listing> partidos = new ArrayList<Listing>(
-            Arrays.asList(clasico, realbetis));
-     
-
+        ArrayList<Partido> partidos = (ArrayList<Partido>) getServletContext().getAttribute("partidos");
         getServletContext().setAttribute("partidos", partidos);
-
         
         RequestDispatcher rd = request.getRequestDispatcher("/faces/partidos.xhtml");
         rd.forward(request, response);

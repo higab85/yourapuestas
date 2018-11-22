@@ -35,14 +35,8 @@ public class MostrarContrincantes extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        Contrincante barsa = new Contrincante("barsa");
-        Contrincante aleti = new Contrincante("aleti");
-        Contrincante betis = new Contrincante("betis");
-        Contrincante rayo = new Contrincante("rayo");
 
-        ArrayList<Contrincante> contrincantes = new ArrayList<Contrincante>(
-            Arrays.asList(barsa, aleti, betis, rayo));
-
+        ArrayList<Contrincante> contrincantes = (ArrayList<Contrincante>) getServletContext().getAttribute("contrincantes");
         getServletContext().setAttribute("contrincantes", contrincantes);
         
         RequestDispatcher rd = request.getRequestDispatcher("/faces/contrincantes.xhtml");
