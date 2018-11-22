@@ -9,6 +9,22 @@
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
+    <servlet>
+        <servlet-name>MostrarContrincantes</servlet-name>
+        <servlet-class>yourapus.MostrarContrincantes</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>MostrarPartidos</servlet-name>
+        <servlet-class>yourapus.MostrarPartidos</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>MostrarPartidos</servlet-name>
+        <url-pattern>/mostrarpartidos</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MostrarContrincantes</servlet-name>
+        <url-pattern>/mostrarcontrincantes</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>/faces/*</url-pattern>
