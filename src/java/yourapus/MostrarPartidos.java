@@ -18,7 +18,6 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet(name = "MostrarPartidos", urlPatterns = {"/MostrarPartidos"})
 public class MostrarPartidos extends HttpServlet {
-
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -66,6 +65,8 @@ public class MostrarPartidos extends HttpServlet {
         
         RequestDispatcher rd = request.getRequestDispatcher("/faces/partidos.xhtml");
         rd.forward(request, response);
+        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
