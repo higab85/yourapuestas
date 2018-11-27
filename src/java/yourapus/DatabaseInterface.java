@@ -15,13 +15,13 @@ import java.util.Arrays;
 public class DatabaseInterface {
     
     public DatabaseInterface(){
-        Contrincante barsa = new Contrincante("barsa");
-        Contrincante real = new Contrincante("real madrid");
-        Contrincante betis = new Contrincante("betis");
-        Contrincante aleti = new Contrincante("aleti");
-        Contrincante rayo = new Contrincante("rayo");
+        Equipo barsa = new Equipo("barsa");
+        Equipo real = new Equipo("real madrid");
+        Equipo betis = new Equipo("betis");
+        Equipo aleti = new Equipo("aleti");
+        Equipo rayo = new Equipo("rayo");
 
-        ArrayList<Contrincante> contrincantes = new ArrayList<Contrincante>(
+        ArrayList<Equipo> contrincantes = new ArrayList<Equipo>(
             Arrays.asList(barsa, aleti, betis, rayo));
 
         Partido juegoClasico = new Partido(barsa, real);

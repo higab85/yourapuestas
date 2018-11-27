@@ -22,6 +22,8 @@ public class EscogerPartidos extends HttpServlet {
     private static final int PARTIDOS=1;
     private static final int PARTIDOS_EQUIPO=2;
     private static final int PARTIDOS_TENIS=3;
+    private static final int PARTIDOS_FAVORITOS=3;
+
     private DatabaseInterface db;
     
     public void init(){
@@ -51,8 +53,11 @@ public class EscogerPartidos extends HttpServlet {
                 ArrayList<Listing> partidos = db.getPartidos();
                 getServletContext().setAttribute("partidos", partidos);
                 rd = request.getRequestDispatcher("/mostrarpartidos");
+                // separas los partidos en favorito y no favorito
                 break;
             case PARTIDOS_EQUIPO:
+                // Filtras todos los partidos para solo mostrar los que sean del
+                // equipo deseado
                 break;
             case PARTIDOS_TENIS:
                 break;

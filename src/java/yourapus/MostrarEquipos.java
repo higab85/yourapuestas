@@ -20,8 +20,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author bear
  */
-@WebServlet(name = "MostrarContrincantes", urlPatterns = {"/MostrarContrincantes"})
-public class MostrarContrincantes extends HttpServlet {
+@WebServlet(name = "MostrarEquipos", urlPatterns = {"/MostrarEquipos"})
+public class MostrarEquipos extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,10 +36,10 @@ public class MostrarContrincantes extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
-        ArrayList<Contrincante> contrincantes = (ArrayList<Contrincante>) getServletContext().getAttribute("contrincantes");
-        getServletContext().setAttribute("contrincantes", contrincantes);
+        ArrayList<Equipo> equipos = (ArrayList<Equipo>) getServletContext().getAttribute("equipos");
+        getServletContext().setAttribute("equipos", equipos);
         
-        RequestDispatcher rd = request.getRequestDispatcher("/faces/contrincantes.xhtml");
+        RequestDispatcher rd = request.getRequestDispatcher("/faces/equipos.xhtml");
         rd.forward(request, response);
 
 

@@ -13,29 +13,29 @@ import java.io.Serializable;
  */
 public class Partido implements Serializable {
     
-    Partido(Contrincante contrincante1, Contrincante contrincante2) {
+    Partido(Equipo contrincante1, Equipo contrincante2) {
         this.contrincante1 = contrincante1;
         this.contrincante2 = contrincante2;
     }
 
-    public Contrincante getContrincante1() {
+    public Equipo getContrincante1() {
         return contrincante1;
     }
 
-    public Contrincante getContrincante2() {
+    public Equipo getContrincante2() {
         return contrincante2;
     }
 
-    public void setContrincante1(Contrincante contrincante1) {
+    public void setContrincante1(Equipo contrincante1) {
         this.contrincante1 = contrincante1;
     }
 
-    public void setContrincante2(Contrincante contrincante2) {
+    public void setContrincante2(Equipo contrincante2) {
         this.contrincante2 = contrincante2;
     }
     
     
-    private Contrincante contrincante1;
-    private Contrincante contrincante2;
+    private Equipo contrincante1;
+    private Equipo contrincante2;
    
 }

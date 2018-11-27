@@ -12,14 +12,14 @@ import java.io.Serializable;
  * @author bear
  */
 
-public class Contrincante implements Serializable {
+public class Equipo implements Serializable {
 
 
     private enum Juego {
     FUTBOL, TENIS
     }
     
-    public Contrincante(String nombre){
+    public Equipo(String nombre){
         this.nombre = nombre;
     }
 

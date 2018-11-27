@@ -10,20 +10,28 @@
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet>
-        <servlet-name>MostrarContrincantes</servlet-name>
-        <servlet-class>yourapus.MostrarContrincantes</servlet-class>
+        <servlet-name>MostrarEquipos</servlet-name>
+        <servlet-class>yourapus.MostrarEquipos</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>MostrarPartidos</servlet-name>
         <servlet-class>yourapus.MostrarPartidos</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EscogerPartidos</servlet-name>
+        <servlet-class>yourapus.EscogerPartidos</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EscogerPartidos</servlet-name>
+        <url-pattern>/escogerpartidos</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>MostrarPartidos</servlet-name>
         <url-pattern>/mostrarpartidos</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>MostrarContrincantes</servlet-name>
-        <url-pattern>/mostrarcontrincantes</url-pattern>
+        <servlet-name>MostrarEquipos</servlet-name>
+        <url-pattern>/mostrarequipos</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
