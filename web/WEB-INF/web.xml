@@ -21,6 +21,38 @@
         <servlet-name>EscogerPartidos</servlet-name>
         <servlet-class>yourapus.EscogerPartidos</servlet-class>
     </servlet>
+        <servlet>
+        <servlet-name>Login</servlet-name>
+        <servlet-class>yourapus.Login</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LoginSuccess</servlet-name>
+        <servlet-class>yourapus.LoginSuccess</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ErrorTrace</servlet-name>
+        <servlet-class>yourapus.ErrorTrace</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Index</servlet-name>
+        <servlet-class>yourapus.Index</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Index</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ErrorTrace</servlet-name>
+        <url-pattern>/errortrace</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Login</servlet-name>
+        <url-pattern>/Login</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoginSuccess</servlet-name>
+        <url-pattern>/LoginSuccess</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>EscogerPartidos</servlet-name>
         <url-pattern>/escogerpartidos</url-pattern>

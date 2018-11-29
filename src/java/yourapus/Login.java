@@ -9,8 +9,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "Login3", urlPatterns = {"/Login3"})
+@WebServlet(name = "Login", urlPatterns = {"/Login"})
 public class Login extends HttpServlet {
 
  @Override
@@ -59,6 +59,7 @@ public class Login extends HttpServlet {
     boolean correctCredentials(String username, String password){
         
         Map<String,String> creds = (Map<String,String>) getServletContext().getAttribute("usuarios");
+        System.out.println("user"+username+"pass"+password+"pass2"+creds.get(username));
         if(creds.get(username) == null)
             return false;
         if(creds.get(username).equals(password))
@@ -81,18 +82,21 @@ public class Login extends HttpServlet {
         
         String user_submitted = request.getParameter("user");
         String password_submitted = request.getParameter("password");
-        String puntuacion = request.getParameter("puntuacion");
-        
+        Enumeration<String> parameterNames = request.getParameterNames();
+        System.out.println("parameterNames:");
+        while(parameterNames.hasMoreElements())
+            System.out.println(parameterNames.nextElement());
+            
+        System.out.println(parameterNames);
         if(correctCredentials(user_submitted, password_submitted)){
             request.setAttribute("user", user_submitted);
-            request.setAttribute("puntuacion", puntuacion);
 
-            RequestDispatcher success = request.getRequestDispatcher("Login3Success");
+            RequestDispatcher success = request.getRequestDispatcher("LoginSuccess");
             success.forward(request, response);
             
         }else{
-            RequestDispatcher error = request.getRequestDispatcher("/error.html");
-            error.forward(request, response);   
+         //   RequestDispatcher error = request.getRequestDispatcher("/errortrace");
+         //   error.forward(request, response);   
         }
     }
 

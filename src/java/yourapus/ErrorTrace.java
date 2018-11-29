@@ -7,18 +7,18 @@ package yourapus;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.Map;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "Login3Success", urlPatterns = {"/Login3Success"})
-public class LoginSuccess extends HttpServlet {
+/**
+ *
+ * @author bear
+ */
+@WebServlet(name = "ErrorTrace", urlPatterns = {"/ErrorTrace"})
+public class ErrorTrace extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,35 +31,33 @@ public class LoginSuccess extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        String user_submitted = (String) request.getAttribute("user");
+
+        Exception throwable = (Exception) request.getAttribute("javax.servlet.error.exception");
+        Integer status_code = (Integer) request.getAttribute("javax.servlet.error.status_code");
+
         
-        Cookie[] cookies = request.getCookies();
-        Cookie cookie = null;
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet ErrorTrace</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Error</h1>");
+            
+            out.println("<h2>Status Error: " + status_code + "</h2>");
 
-        if(cookies == null){
-            System.out.println("cookie is null");
-            cookie = new Cookie("user", user_submitted);
+            out.println("<h2>Error:</h2>");
+            out.println("<p>" + throwable + "</p>");
+            
+            out.println("<h2>Trace:</h2>");
+            for(StackTraceElement item: throwable.getStackTrace())
+                out.println("<p>" + item.toString() + "</p>");
+            out.println("</body>");
+            out.println("</html>");
         }
-        else{
-            for (Cookie cookie1 : cookies) {
-                if (cookie1.getName().equals("user")) {
-                    cookie = cookie1;
-                }
-            }
-            if(cookie == null){
-                cookie = new Cookie("user", user_submitted);
-            }
-        }
-        System.out.println("cookie val: " + cookie.getValue());
-
-        cookie.setPath("/");
-        response.addCookie(cookie);
-          
-        //return response
-        response.sendRedirect("/yourapuestas");
-//        RequestDispatcher success = request.getRequestDispatcher("/index.xhtml");
-//        success.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

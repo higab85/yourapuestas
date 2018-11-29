@@ -6,16 +6,16 @@
     <body>
 
         <ui:decorate template="./base.xhtml">
-
+            
             <ui:define name="content">
                  <div class="login centerme">
-                    <form class="form-signin" name="loginform" method="post" action="Login3">
+                    <form class="form-signin" name="loginform" method="post" action="Login">
                         <img class="mb-4" src="../../assets/brand/bootstrap-solid.svg" alt="" width="72" height="72"/>
                         <h1 class="h3 mb-3 font-weight-normal">Por favor, inicie sesión</h1>
-                        <label class="sr-only">Email</label>
-                        <input type="email" id="inputEmail" class="form-control" placeholder="Email"/>
+                        <label class="sr-only">User</label>
+                        <input name="user" type="text" id="inputUser" class="form-control" placeholder="User"/>
                         <label for="inputPassword" class="sr-only">Contraseña</label>
-                        <input type="password" id="inputPassword" class="form-control" placeholder="Contraseña"/>
+                        <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Contraseña"/>
                         <div class="checkbox mb-3">
                           <label>
                               <input type="checkbox" value="remember-me"> Acordarse de mi </input>
