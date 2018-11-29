@@ -3,10 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package yourapus;
+package yourapus.database;
 
+import yourapus.models.Listing;
+import yourapus.models.Partido;
+import yourapus.models.Precios;
+import yourapus.models.Equipo;
 import java.util.ArrayList;
 import java.util.Arrays;
+import yourapus.models.Usuario;
 
 /**
  *
@@ -47,12 +52,24 @@ public class DatabaseInterface {
 
         this.partidos = new ArrayList<Listing>(
             Arrays.asList(clasico, realbetis));
+        
+        ArrayList<Listing> partidosFavoritos = new ArrayList<Listing>(
+            Arrays.asList(clasico, realbetis));
+        
+        ArrayList<Equipo> equiposFavoritos = new ArrayList<Equipo>(
+                Arrays.asList(real, aleti, rayo));
+        
+        this.currentUser = new Usuario("Gab", "gab@gab.com", partidosFavoritos, equiposFavoritos);
     }
     
     ArrayList<Listing> partidos;
+    Usuario currentUser;
     
     public ArrayList<Listing> getPartidos(){
         return this.partidos;
     }
     
+    public Usuario getCurrentUser(){
+        return this.currentUser;
+    }
 }

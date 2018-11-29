@@ -5,6 +5,7 @@
  */
 package yourapus;
 
+import yourapus.models.Equipo;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;

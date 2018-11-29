@@ -1,6 +1,8 @@
-package yourapus;
+package yourapus.models;
 
 
+import yourapus.models.Partido;
+import yourapus.models.Precios;
 import java.io.Serializable;
 import java.util.ArrayList;
 

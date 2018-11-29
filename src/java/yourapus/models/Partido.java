@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package yourapus;
+package yourapus.models;
 
+import yourapus.models.Equipo;
 import java.io.Serializable;
 
 /**
@@ -13,7 +14,7 @@ import java.io.Serializable;
  */
 public class Partido implements Serializable {
     
-    Partido(Equipo contrincante1, Equipo contrincante2) {
+    public Partido(Equipo contrincante1, Equipo contrincante2) {
         this.contrincante1 = contrincante1;
         this.contrincante2 = contrincante2;
     }

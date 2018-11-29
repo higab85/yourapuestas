@@ -5,6 +5,10 @@
  */
 package yourapus;
 
+import yourapus.models.Listing;
+import yourapus.models.Partido;
+import yourapus.models.Precios;
+import yourapus.models.Equipo;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -16,6 +20,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import yourapus.models.Usuario;
 
 /**
  *
@@ -90,8 +95,6 @@ public class Index extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         Cookie[] cookies = request.getCookies();
-        Cookie cookieUser = null;
-        Cookie cookieNoLogin = null;
         ArrayList<Listing> listings = null;
         
         if(cookies != null){
@@ -100,12 +103,16 @@ public class Index extends HttpServlet {
 
                 if (cookie.getName().equals("user")){ 
                     listings = partidosFavoritos();
-                    cookieUser = cookie;
+                    // Pedimos a la base de datos el usuario
+                    getServletContext().setAttribute("cosa", "usuario");
+                    request.getRequestDispatcher("/DatabaseServlet").include(request, response);
+                    Usuario usuario = (Usuario) getServletContext().getAttribute("cosa");
+                    System.out.println(usuario.getNombre());
+                    getServletContext().setAttribute("usuario", usuario);
                     break;
                 }
                 if (cookie.getName().equals("NoLogin")) {
                     listings = partidosUltimos();
-                    cookieNoLogin = cookie;
                 }
             }
         }

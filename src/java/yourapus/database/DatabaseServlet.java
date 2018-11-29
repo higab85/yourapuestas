@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package yourapus;
+package yourapus.database;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Serializable;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,9 +18,16 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author bear
  */
-@WebServlet(name = "ErrorTrace", urlPatterns = {"/ErrorTrace"})
-public class ErrorTrace extends HttpServlet {
+@WebServlet(name = "DatabaseServlet", urlPatterns = {"/DatabaseServlet"})
+public class DatabaseServlet extends HttpServlet {
 
+    private DatabaseInterface db;
+
+    
+    public void init(){
+        db = new DatabaseInterface();
+    }
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -31,33 +39,22 @@ public class ErrorTrace extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        Exception throwable = (Exception) request.getAttribute("javax.servlet.error.exception");
-        Integer status_code = (Integer) request.getAttribute("javax.servlet.error.status_code");
-
-        
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ErrorTrace</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Error</h1>");
-            
-            out.println("<h2>Status Error: " + status_code + "</h2>");
-
-            out.println("<h2>Error:</h2>");
-            out.println("<p>" + throwable + "</p>");
-            
-            out.println("<h2>Trace:</h2>");
-            for(StackTraceElement item: throwable.getStackTrace())
-                out.println("<p>" + item.toString() + "</p>");
-            out.println("</body>");
-            out.println("</html>");
+        
+        String peticion = (String) getServletContext().getAttribute("cosa");
+        
+        Serializable cosa = null;
+        switch(peticion){
+            case "usuario":
+                cosa =  db.getCurrentUser();
+                break;
+            case "todosPartidos":
+                cosa =  db.getPartidos();
+                break;
+           
         }
+        getServletContext().setAttribute("cosa", cosa);
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -18,7 +18,9 @@
     <h:body>
         <div class="wrapper">
             <div id="navbar">
-                <ui:include src="/navbar.xhtml"></ui:include>
+                <ui:include src="/navbar.xhtml">
+                    <ui:param name="usuario" value="${application.getAttribute('usuario')}" />
+                </ui:include>
             </div>
 
             <div id="content" class="center_content">

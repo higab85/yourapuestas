@@ -5,6 +5,7 @@
  */
 package yourapus;
 
+import yourapus.models.Partido;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -5,10 +5,14 @@
  */
 package yourapus;
 
+import static com.sun.faces.facelets.util.Path.context;
+import yourapus.database.DatabaseInterface;
+import yourapus.models.Listing;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.Servlet;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -24,11 +28,6 @@ public class EscogerPartidos extends HttpServlet {
     private static final int PARTIDOS_TENIS=3;
     private static final int PARTIDOS_FAVORITOS=3;
 
-    private DatabaseInterface db;
-    
-    public void init(){
-        db = new DatabaseInterface();
-    }
     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,15 +43,13 @@ public class EscogerPartidos extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         
 //        int opcion = Integer.parseInt(request.getParameter("opcion"));
+        System.out.println("ESCOGERPARTIDOS");
 
         int opcion = 1;
         RequestDispatcher rd = null;
 //        
         switch(opcion){
             case PARTIDOS:
-                ArrayList<Listing> partidos = db.getPartidos();
-                getServletContext().setAttribute("partidos", partidos);
-                rd = request.getRequestDispatcher("/mostrarpartidos");
                 // separas los partidos en favorito y no favorito
                 break;
             case PARTIDOS_EQUIPO:
@@ -63,7 +60,14 @@ public class EscogerPartidos extends HttpServlet {
                 break;
 
         }
+        // Pedimos a la base de datos todos los partidos
+        getServletContext().setAttribute("cosa", "todosPartidos");
+        request.getRequestDispatcher("/DatabaseServlet").include(request, response);
         
+        ArrayList<Listing> partidos = (ArrayList<Listing>) getServletContext().getAttribute("cosa");
+        getServletContext().setAttribute("partidos", partidos);
+        rd = request.getRequestDispatcher("/mostrarpartidos");
+                
         rd.forward(request, response);
         
     }
