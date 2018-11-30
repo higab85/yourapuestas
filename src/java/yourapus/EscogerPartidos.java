@@ -61,7 +61,7 @@ public class EscogerPartidos extends HttpServlet {
 
         }
         // Pedimos a la base de datos todos los partidos
-        getServletContext().setAttribute("cosa", "todosPartidos");
+        request.setAttribute("cosa", "todosPartidos");
         request.getRequestDispatcher("/DatabaseServlet").include(request, response);
         
         ArrayList<Listing> partidos = (ArrayList<Listing>) getServletContext().getAttribute("cosa");

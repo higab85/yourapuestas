@@ -3,32 +3,29 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package yourapus.database;
+package yourapus;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Optional;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import yourapus.models.Listing;
+import yourapus.models.Usuario;
 
 /**
  *
  * @author bear
  */
-@WebServlet(name = "DatabaseServlet", urlPatterns = {"/DatabaseServlet"})
-public class DatabaseServlet extends HttpServlet {
+public class Logout extends HttpServlet {
 
-    private DatabaseInterface db;
-
-    
-    @Override
-    public void init(){
-        db = new DatabaseInterface();
-    }
-    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -42,21 +39,19 @@ public class DatabaseServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        String peticion = (String) request.getAttribute("cosa");
+        getServletContext().removeAttribute("usuario");
+     
+        Cookie borrarCookieUsuario = new Cookie("usuario", "");
+        borrarCookieUsuario.setMaxAge(0);
+        response.addCookie(borrarCookieUsuario);
         
-        Serializable cosa = null;
-        switch(peticion){
-            case "usuario":
-                cosa =  db.getCurrentUser();
-                break;
-            case "todosPartidos":
-                cosa =  db.getPartidos();
-                break;
-            case "ultimosPartidos":
-                cosa = db.getUltimosPartidos();
-                break;  
-        }
-        getServletContext().setAttribute("cosa", cosa);
+        
+        HttpSession session = request.getSession();
+        session.invalidate();//invalidating session
+        
+        
+        RequestDispatcher rd = request.getRequestDispatcher("/");
+        rd.forward(request, response);
 
     }
 

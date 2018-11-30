@@ -16,6 +16,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import yourapus.models.Usuario;
 
 @WebServlet(name = "Login3Success", urlPatterns = {"/Login3Success"})
 public class LoginSuccess extends HttpServlet {
@@ -32,34 +33,24 @@ public class LoginSuccess extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String user_submitted = (String) request.getAttribute("user");
         
-        Cookie[] cookies = request.getCookies();
-        Cookie cookie = null;
-
-        if(cookies == null){
-            System.out.println("cookie is null");
-            cookie = new Cookie("user", user_submitted);
-        }
-        else{
-            for (Cookie cookie1 : cookies) {
-                if (cookie1.getName().equals("user")) {
-                    cookie = cookie1;
-                }
-            }
-            if(cookie == null){
-                cookie = new Cookie("user", user_submitted);
-            }
-        }
-        System.out.println("cookie val: " + cookie.getValue());
-
+        System.out.println("SOUUT");
+        String user_submitted = (String) request.getAttribute("usuario");
+        
+        Cookie cookie = new Cookie("usuario", user_submitted);
         cookie.setPath("/");
+        cookie.setMaxAge(-1);
         response.addCookie(cookie);
-          
+        
+        // Añadimos el usuario al contexto
+        request.setAttribute("cosa", "usuario");
+        request.getRequestDispatcher("/DatabaseServlet").include(request, response);
+        Usuario usuario = (Usuario) getServletContext().getAttribute("cosa");
+        getServletContext().setAttribute("usuario", usuario);  
+        
+        getServletContext().setAttribute("session", "yes");
         //return response
         response.sendRedirect("/yourapuestas");
-//        RequestDispatcher success = request.getRequestDispatcher("/index.xhtml");
-//        success.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

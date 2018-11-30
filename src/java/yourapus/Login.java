@@ -19,6 +19,7 @@ import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -44,22 +45,18 @@ public class Login extends HttpServlet {
 
         String delims = ","; 
         Map<String, String> creds = new HashMap<String, String>();
-        Map<String, Integer> puntuaciones = new HashMap<String, Integer>();
 
         for(String user:users){
             String[] cred = user.split(delims);
             creds.put(cred[0], cred[1]);
-            puntuaciones.put(cred[0], 0);
         }
         getServletContext().setAttribute("usuarios", creds);
-        getServletContext().setAttribute("puntuaciones", puntuaciones);
 
     } 
     
     boolean correctCredentials(String username, String password){
         
         Map<String,String> creds = (Map<String,String>) getServletContext().getAttribute("usuarios");
-        System.out.println("user"+username+"pass"+password+"pass2"+creds.get(username));
         if(creds.get(username) == null)
             return false;
         if(creds.get(username).equals(password))
@@ -78,26 +75,6 @@ public class Login extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        
-        String user_submitted = request.getParameter("user");
-        String password_submitted = request.getParameter("password");
-        Enumeration<String> parameterNames = request.getParameterNames();
-        System.out.println("parameterNames:");
-        while(parameterNames.hasMoreElements())
-            System.out.println(parameterNames.nextElement());
-            
-        System.out.println(parameterNames);
-        if(correctCredentials(user_submitted, password_submitted)){
-            request.setAttribute("user", user_submitted);
-
-            RequestDispatcher success = request.getRequestDispatcher("LoginSuccess");
-            success.forward(request, response);
-            
-        }else{
-         //   RequestDispatcher error = request.getRequestDispatcher("/errortrace");
-         //   error.forward(request, response);   
-        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -112,7 +89,6 @@ public class Login extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
     }
 
     /**
@@ -126,7 +102,29 @@ public class Login extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+                response.setContentType("text/html;charset=UTF-8");
+        
+        String user_submitted = request.getParameter("user");
+        String password_submitted = request.getParameter("password");
+        Enumeration<String> parameterNames = request.getParameterNames();
+        System.out.println("parameterNames:");
+        while(parameterNames.hasMoreElements())
+            System.out.println(parameterNames.nextElement());
+            
+        System.out.println(parameterNames);
+        
+        if(correctCredentials(user_submitted, password_submitted)){
+            request.setAttribute("user", user_submitted);
+
+            getServletContext().removeAttribute("failedPasswordAttempt");
+
+            RequestDispatcher success = request.getRequestDispatcher("LoginSuccess");
+            success.forward(request, response);
+            
+        }else{
+            getServletContext().setAttribute("failedPasswordAttempt", "naughty");
+            response.sendRedirect("/yourapuestas/faces/login.xhtml");
+        }
     }
 
     /**

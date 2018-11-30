@@ -5,6 +5,7 @@
  */
 package yourapus.database;
 
+import java.io.Serializable;
 import yourapus.models.Listing;
 import yourapus.models.Partido;
 import yourapus.models.Precios;
@@ -31,6 +32,7 @@ public class DatabaseInterface {
 
         Partido juegoClasico = new Partido(barsa, real);
         Partido juegoRealbetis = new Partido(real, betis);
+        Partido juegoRealRayo = new Partido(real, rayo);
 
         Precios bwinClasico = new Precios("0.15", "0.34", "1.00", "bwin");
         Precios bet360Clasico = new Precios("0.10", "0.36", "0.09", "bet360");
@@ -45,26 +47,41 @@ public class DatabaseInterface {
         ArrayList<Precios> casasRealbetis = new ArrayList<Precios>(
             Arrays.asList(bwinRealbetis, bet360Realbetis, casinoRealbetis)
         );
+        
+        Precios bwinRealRayo = new Precios("0.05", "0.14", "3.00", "bwin");
+        Precios bet360RealRayo = new Precios("0.15", "0.26", "0.49", "bet360");
+        Precios casinoRealRayo = new Precios("5.16", "0.01", "1.45", "casino");
+        ArrayList<Precios> casasRealRayo = new ArrayList<Precios>(
+            Arrays.asList(bwinRealRayo, bet360RealRayo, casinoRealRayo)
+        );
+
 
         Listing clasico = new Listing(juegoClasico, casasClasico);
         Listing realbetis = new Listing(juegoRealbetis, casasRealbetis);
+        Listing realRayo = new Listing(juegoRealRayo, casasRealRayo);
 
 
         this.partidos = new ArrayList<Listing>(
-            Arrays.asList(clasico, realbetis));
+            Arrays.asList(clasico, realbetis, realRayo));
         
-        ArrayList<Listing> partidosFavoritos = new ArrayList<Listing>(
+        this.partidosFavoritos = new ArrayList<Listing>(
             Arrays.asList(clasico, realbetis));
         
         ArrayList<Equipo> equiposFavoritos = new ArrayList<Equipo>(
                 Arrays.asList(real, aleti, rayo));
         
-        this.currentUser = new Usuario("Gab", "gab@gab.com", partidosFavoritos, equiposFavoritos);
+        this.ultimosPartidos =new ArrayList<Listing>(
+            Arrays.asList(clasico, realRayo));
+        
+        this.currentUser = new Usuario("Gab", "gab@gab.com", this.partidosFavoritos, equiposFavoritos);
     }
     
     ArrayList<Listing> partidos;
     Usuario currentUser;
-    
+    ArrayList<Listing> partidosFavoritos;
+    ArrayList<Listing> ultimosPartidos;
+
+            
     public ArrayList<Listing> getPartidos(){
         return this.partidos;
     }
@@ -72,4 +89,10 @@ public class DatabaseInterface {
     public Usuario getCurrentUser(){
         return this.currentUser;
     }
+
+    Serializable getUltimosPartidos() {
+        return this.ultimosPartidos;
+       
+    }
+
 }

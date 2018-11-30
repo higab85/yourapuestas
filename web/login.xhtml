@@ -1,7 +1,8 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
 
     <body>
 
@@ -9,7 +10,7 @@
             
             <ui:define name="content">
                  <div class="login centerme">
-                    <form class="form-signin" name="loginform" method="post" action="Login">
+                    <form class="form-signin" name="loginform" method="post" action="/yourapuestas/Login">
                         <img class="mb-4" src="../../assets/brand/bootstrap-solid.svg" alt="" width="72" height="72"/>
                         <h1 class="h3 mb-3 font-weight-normal">Por favor, inicie sesión</h1>
                         <label class="sr-only">User</label>
@@ -22,6 +23,12 @@
                           </label>
                         </div>
                         <button class="btn btn-lg btn-primary btn-block" type="submit">Iniciar sesión</button>
+
+                        <h:form rendered="${not empty application.getAttribute('failedPasswordAttempt')}">
+                            <label style="color:red">
+                                Usuario o contraseña incorrecta!
+                            </label>
+                        </h:form>
                     </form>
                     <a href="/yourapuestas/faces/register.xhtml">Registrarse</a>
                     <a href="/yourapuestas/faces/forgotpassword.xhtml">Recuperar contraseña</a>

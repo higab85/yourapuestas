@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <body>
 
@@ -13,7 +14,8 @@
 
                     <!-- https://stackoverflow.com/questions/4870462/conditionally-displaying-jsf-components -->
                     <!-- https://docs.oracle.com/javaee/7/tutorial/jsf-el005.htm#BNAIK -->
-                    <h:form rendered="${empty application.getAttribute('listings')}">
+                    
+                    <h:form rendered="${empty application.getAttribute('session')}">
                         <div class="jumbotron">
                             <h1 class="display-4">YourApus</h1>
                             <p class="lead">La mejor web de apuestas</p>
@@ -23,31 +25,37 @@
                             <a class="btn btn-secondary btn-lg" href="/yourapuestas/faces/login.xhtml" role="button">No iniciar sesión</a>
                         </div>
                     </h:form>
-                    <h:form rendered="${not empty application.getAttribute('listings')}">
+                    <h:form rendered="${not empty application.getAttribute('session')}">
+                        <c:if test="${not empty application.getAttribute('usuario')}" >
+                            <h2>Partidos Favoritos</h2>
+                        </c:if>
+                        <c:if test="${empty application.getAttribute('usuario')}" >
+                            <h2>Últimos Partidos</h2>
+                        </c:if>
                         <ui:repeat var="item" value="${application.getAttribute('listings')}" > 
-                        <div class="feed-item">
-                            <table class="table table-hover">
-                                <thead class="thead-dark">
-                                  <tr>
-                                    <th scope="col">Casa apus</th>
-                                    <th scope="col">#{item.partido.contrincante1.nombre}</th>
-                                    <th scope="col">vs</th>
-                                    <th scope="col">#{item.partido.contrincante2.nombre}</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                    <ui:repeat var="casa" value="#{item.casasDeApuestas}" > 
-                                  <tr>
-                                    <th scope="row">#{casa.nombreCasaDeApuestas}</th>
-                                    <td>#{casa.ganaVisitante}</td>
-                                    <td>#{casa.empate}</td>
-                                    <td>#{casa.ganaLocal}</td>
-                                  </tr>
-                                    </ui:repeat>
-                                </tbody>
-                            </table>
-                        </div>
-                    </ui:repeat>
+                            <div class="feed-item">
+                                <table class="table table-hover">
+                                    <thead class="thead-dark">
+                                      <tr>
+                                        <th scope="col">Casa apus</th>
+                                        <th scope="col">#{item.partido.contrincante1.nombre}</th>
+                                        <th scope="col">vs</th>
+                                        <th scope="col">#{item.partido.contrincante2.nombre}</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                        <ui:repeat var="casa" value="#{item.casasDeApuestas}" > 
+                                            <tr>
+                                              <th scope="row">#{casa.nombreCasaDeApuestas}</th>
+                                              <td>#{casa.ganaVisitante}</td>
+                                              <td>#{casa.empate}</td>
+                                              <td>#{casa.ganaLocal}</td>
+                                            </tr>
+                                        </ui:repeat>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </ui:repeat>
                     </h:form>
                 </div>
 

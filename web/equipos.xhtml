@@ -3,13 +3,26 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:cc="http://xmlns.jcp.org/jsf/composite"
-    xmlns:h="http://xmlns.jcp.org/jsf/html">
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <body>
 
         <ui:decorate template="base.xhtml">
             
             <ui:define name="content">
+                <c:if test="${not empty application.getAttribute('usuario')}" >
+                    <h2>Equipos Favoritos</h2>
+                    <ui:repeat var="item" value="${application.getAttribute('usuario').equiposFavoritos}" > 
+                        <div class="card" style="width: 18rem;">
+                            <div class="card-body">
+                              <h5 class="card-title">#{item.nombre}</h5>
+                              <a href="#" class="btn btn-primary">Ver partidos</a>
+                              <a href="#" class="btn btn-secondary"> Marcar favorito</a>
+                            </div>
+                        </div>
+                    </ui:repeat>
+                </c:if>
                 <ui:repeat var="item" value="${application.getAttribute('equipos')}" > 
                     <div class="card" style="width: 18rem;">
                         <div class="card-body">

@@ -21,7 +21,7 @@
         <servlet-name>EscogerPartidos</servlet-name>
         <servlet-class>yourapus.EscogerPartidos</servlet-class>
     </servlet>
-        <servlet>
+    <servlet>
         <servlet-name>Login</servlet-name>
         <servlet-class>yourapus.Login</servlet-class>
     </servlet>
@@ -36,6 +36,10 @@
     <servlet>
         <servlet-name>Index</servlet-name>
         <servlet-class>yourapus.Index</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Logout</servlet-name>
+        <servlet-class>yourapus.Logout</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Index</servlet-name>
@@ -68,6 +72,10 @@
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>/faces/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Logout</servlet-name>
+        <url-pattern>/Logout</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

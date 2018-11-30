@@ -1,7 +1,8 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <body>
 
@@ -9,6 +10,34 @@
 
             <ui:define name="content">
                 <div class="centerme feed">
+                    <c:if test="${not empty application.getAttribute('usuario')}" >
+                        <h2>Partidos Favoritos</h2>
+                        <ui:repeat var="item" value="${application.getAttribute('usuario').partidosFavoritos}" > 
+                            <div class="feed-item">
+                                <table class="table table-hover">
+                                    <thead class="thead-dark">
+                                      <tr>
+                                        <th scope="col">Casa apus</th>
+                                        <th scope="col">#{item.partido.contrincante1.nombre}</th>
+                                        <th scope="col">vs</th>
+                                        <th scope="col">#{item.partido.contrincante2.nombre}</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                        <ui:repeat var="casa" value="#{item.casasDeApuestas}" > 
+                                      <tr>
+                                        <th scope="row">#{casa.nombreCasaDeApuestas}</th>
+                                        <td>#{casa.ganaVisitante}</td>
+                                        <td>#{casa.empate}</td>
+                                        <td>#{casa.ganaLocal}</td>
+                                      </tr>
+                                        </ui:repeat>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </ui:repeat>
+                    </c:if>
+                    <h2>Todos los partidos</h2>
                     <ui:repeat var="item" value="${application.getAttribute('partidos')}" > 
                         <div class="feed-item">
                             <table class="table table-hover">
