@@ -5,12 +5,11 @@
  */
 package yourapus;
 
-import static com.sun.faces.facelets.util.Path.context;
-import yourapus.database.DatabaseInterface;
 import yourapus.models.Listing;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
@@ -46,27 +45,32 @@ public class EscogerPartidos extends HttpServlet {
         System.out.println("ESCOGERPARTIDOS");
 
         int opcion = 1;
-        RequestDispatcher rd = null;
-//        
+        String nombrePartido = (String) request.getAttribute("nombrePartido");
         switch(opcion){
             case PARTIDOS:
-                // separas los partidos en favorito y no favorito
+                request.setAttribute("cosa", "todosPartidos");
+                request.getRequestDispatcher("/DatabaseServlet").include(request, response);
                 break;
             case PARTIDOS_EQUIPO:
-                // Filtras todos los partidos para solo mostrar los que sean del
-                // equipo deseado
+                //
                 break;
             case PARTIDOS_TENIS:
                 break;
 
         }
+        
+        Enumeration<String> parametros = request.getAttributeNames();
+        while(parametros.hasMoreElements()){
+            System.out.println(parametros.nextElement());
+        }
+            
         // Pedimos a la base de datos todos los partidos
         request.setAttribute("cosa", "todosPartidos");
         request.getRequestDispatcher("/DatabaseServlet").include(request, response);
         
         ArrayList<Listing> partidos = (ArrayList<Listing>) getServletContext().getAttribute("cosa");
         getServletContext().setAttribute("partidos", partidos);
-        rd = request.getRequestDispatcher("/mostrarpartidos");
+        RequestDispatcher rd = request.getRequestDispatcher("/mostrarpartidos");
                 
         rd.forward(request, response);
         

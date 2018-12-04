@@ -17,8 +17,8 @@
                         <div class="card" style="width: 18rem;">
                             <div class="card-body">
                               <h5 class="card-title">#{item.nombre}</h5>
-                              <a href="#" class="btn btn-primary">Ver partidos</a>
-                              <a href="#" class="btn btn-secondary"> Marcar favorito</a>
+                              <a href="escogerpartidos?nombrePartido='#{item.nombre}'" class="btn btn-primary">Ver partidos</a>
+                              <a href="marcarfavorito?nombrePartido='#{item.nombre}'" class="btn btn-secondary"> Marcar favorito</a>
                             </div>
                         </div>
                     </ui:repeat>
@@ -27,8 +27,8 @@
                     <div class="card" style="width: 18rem;">
                         <div class="card-body">
                           <h5 class="card-title">#{item.nombre}</h5>
-                          <a href="#" class="btn btn-primary">Ver partidos</a>
-                          <a href="#" class="btn btn-secondary"> Marcar favorito</a>
+                          <a href="escogerpartidos?nombrePartido='#{item.nombre}'" class="btn btn-primary">Ver partidos</a>
+                          <a href="marcarfavorito?nombrePartido='#{item.nombre}'" class="btn btn-secondary"> Marcar favorito</a>
                         </div>
                       </div>
                 </ui:repeat>

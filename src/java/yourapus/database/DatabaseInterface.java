@@ -70,18 +70,26 @@ public class DatabaseInterface {
         ArrayList<Equipo> equiposFavoritos = new ArrayList<Equipo>(
                 Arrays.asList(real, aleti, rayo));
         
+        this.equipos = new ArrayList<Equipo>(
+                Arrays.asList(real, aleti, rayo, betis));
+        
         this.ultimosPartidos =new ArrayList<Listing>(
             Arrays.asList(clasico, realRayo));
         
         this.currentUser = new Usuario("Gab", "gab@gab.com", this.partidosFavoritos, equiposFavoritos);
     }
     
+    ArrayList<Equipo> equipos;
     ArrayList<Listing> partidos;
     Usuario currentUser;
     ArrayList<Listing> partidosFavoritos;
     ArrayList<Listing> ultimosPartidos;
 
-            
+    
+    public ArrayList<Equipo> getEquipos(){
+        return this.equipos;
+    }
+    
     public ArrayList<Listing> getPartidos(){
         return this.partidos;
     }
