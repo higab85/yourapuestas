@@ -10,6 +10,10 @@
 
             <ui:define name="content">
                 <div class="centerme feed">
+                    
+                    
+                    <!-- Tendríamos que coger la sesión en vez de la aplicación
+                    para identificar cada usuario con sus partidos favoritos-->
                     <c:if test="${not empty application.getAttribute('usuario')}" >
                         <h2>Partidos Favoritos</h2>
                         <ui:repeat var="item" value="${application.getAttribute('usuario').partidosFavoritos}" > 
@@ -37,7 +41,12 @@
                             </div>
                         </ui:repeat>
                     </c:if>
-                    <h2>Todos los partidos</h2>
+                    <c:if test="${empty request.getAttribute('equipo')}" >
+                        <h2>Todos los partidos</h2>
+                    </c:if>
+                    <c:if test="${not empty request.getAttribute('equipo')}" >
+                        <h2>Todos los partidos del #{request.getAttribute('equipo')} </h2>
+                    </c:if>
                     <ui:repeat var="item" value="${application.getAttribute('partidos')}" > 
                         <div class="feed-item">
                             <table class="table table-hover">

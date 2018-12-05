@@ -24,7 +24,7 @@ public class DatabaseInterface {
         Equipo barsa = new Equipo("barsa");
         Equipo real = new Equipo("real madrid");
         Equipo betis = new Equipo("betis");
-        Equipo aleti = new Equipo("aleti");
+        Equipo aleti = new Equipo("atleti");
         Equipo rayo = new Equipo("rayo");
 
         ArrayList<Equipo> contrincantes = new ArrayList<Equipo>(
@@ -92,6 +92,17 @@ public class DatabaseInterface {
     
     public ArrayList<Listing> getPartidos(){
         return this.partidos;
+    }
+     public ArrayList<Listing> getPartidos(String equipo){
+         ArrayList<Listing> partidosEquipo = new ArrayList<>();
+     
+         for (Listing partido : this.partidos){
+            if (equipo.equalsIgnoreCase(partido.getPartido().getContrincante1().getNombre()) ||
+                    equipo.equalsIgnoreCase(partido.getPartido().getContrincante2().getNombre()))
+                partidosEquipo.add(partido);
+                    
+         }
+        return partidosEquipo;
     }
     
     public Usuario getCurrentUser(){

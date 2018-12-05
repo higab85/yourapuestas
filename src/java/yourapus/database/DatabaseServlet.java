@@ -52,6 +52,17 @@ public class DatabaseServlet extends HttpServlet {
             case "todosPartidos":
                 cosa =  db.getPartidos();
                 break;
+                
+            case "PartidosEquipo":
+                String equipo = (String) request.getAttribute("equipo");
+                cosa =  db.getPartidos(equipo);
+                request.setAttribute("equipo", equipo);
+                break;
+                
+            case "equipos":
+                cosa = db.getEquipos();
+                break;
+                
             case "ultimosPartidos":
                 cosa = db.getUltimosPartidos();
                 break;  

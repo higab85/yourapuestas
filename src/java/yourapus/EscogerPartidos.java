@@ -17,17 +17,17 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import yourapus.models.Equipo;
 
 @WebServlet(name = "EscogerPartidos", urlPatterns = {"/EscogerPartidos"})
 public class EscogerPartidos extends HttpServlet {
 
-    private static final int PARTIDOS=1;
-    private static final int PARTIDOS_EQUIPO=2;
-    private static final int PARTIDOS_TENIS=3;
-    private static final int PARTIDOS_FAVORITOS=3;
+    private static final int PARTIDOS = 1;
+    private static final int EQUIPOS = 2;
+    private static final int VER_PARTIDOS_EQUIPO =3;
+    private static final int PARTIDOS_TENIS = 4;
+    private static final int PARTIDOS_FAVORITOS = 5;
 
-    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -40,42 +40,41 @@ public class EscogerPartidos extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-//        int opcion = Integer.parseInt(request.getParameter("opcion"));
-        System.out.println("ESCOGERPARTIDOS");
 
-        int opcion = 1;
-        String nombrePartido = (String) request.getAttribute("nombrePartido");
-        switch(opcion){
+        int opcion = Integer.parseInt(request.getParameter("opcion"));
+        
+        switch (opcion) {
             case PARTIDOS:
-                request.setAttribute("cosa", "todosPartidos");
-                request.getRequestDispatcher("/DatabaseServlet").include(request, response);
+                mostrarPartidos(request, response);
                 break;
-            case PARTIDOS_EQUIPO:
-                //
+
+            case EQUIPOS:
+                mostrarEquipos(request, response);
                 break;
+                
+            case VER_PARTIDOS_EQUIPO:
+                mostrarPartidosEquipo(request, response);
+                break;
+                
             case PARTIDOS_TENIS:
                 break;
 
         }
-        
-        Enumeration<String> parametros = request.getAttributeNames();
-        while(parametros.hasMoreElements()){
-            System.out.println(parametros.nextElement());
-        }
-            
+
+//        Enumeration<String> parametros = request.getAttributeNames();
+//        while(parametros.hasMoreElements()){
+//            System.out.println(parametros.nextElement());
+//        }
         // Pedimos a la base de datos todos los partidos
-        request.setAttribute("cosa", "todosPartidos");
-        request.getRequestDispatcher("/DatabaseServlet").include(request, response);
-        
-        ArrayList<Listing> partidos = (ArrayList<Listing>) getServletContext().getAttribute("cosa");
-        getServletContext().setAttribute("partidos", partidos);
-        RequestDispatcher rd = request.getRequestDispatcher("/mostrarpartidos");
-                
-        rd.forward(request, response);
-        
+//        request.setAttribute("cosa", "todosPartidos");
+//        request.getRequestDispatcher("/DatabaseServlet").include(request, response);
+//
+//        ArrayList<Listing> partidos = (ArrayList<Listing>) getServletContext().getAttribute("cosa");
+//        getServletContext().setAttribute("partidos", partidos);
+//        RequestDispatcher rd = request.getRequestDispatcher("/mostrarpartidos");
+//
+//        rd.forward(request, response);
     }
-    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -115,5 +114,35 @@ public class EscogerPartidos extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    private void mostrarPartidos(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setAttribute("cosa", "todosPartidos");
+        request.getRequestDispatcher("/DatabaseServlet").include(request, response);
+        ArrayList<Listing> partidos = (ArrayList<Listing>) getServletContext().getAttribute("cosa");
+        getServletContext().setAttribute("partidos", partidos);
+        RequestDispatcher rd = request.getRequestDispatcher("/faces/partidos.xhtml");
+        rd.forward(request, response);
+    }
+
+    private void mostrarEquipos(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setAttribute("cosa", "equipos");
+        request.getRequestDispatcher("/DatabaseServlet").include(request, response);
+        ArrayList<Equipo> equipos = (ArrayList<Equipo>) getServletContext().getAttribute("cosa");
+        getServletContext().setAttribute("equipos", equipos);
+
+        RequestDispatcher rd = request.getRequestDispatcher("/faces/equipos.xhtml");
+        rd.forward(request, response);
+    }
+
+    private void mostrarPartidosEquipo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+       String nombreEquipo = (String) request.getParameter("nombreEquipo");
+        request.setAttribute("cosa", "PartidosEquipo");
+        request.setAttribute("equipo", nombreEquipo);
+        request.getRequestDispatcher("/DatabaseServlet").include(request, response);
+        ArrayList<Listing> partidos = (ArrayList<Listing>) getServletContext().getAttribute("cosa");
+        getServletContext().setAttribute("partidos", partidos);
+        RequestDispatcher rd = request.getRequestDispatcher("/faces/partidos.xhtml");
+        rd.forward(request, response);
+    }
 
 }
