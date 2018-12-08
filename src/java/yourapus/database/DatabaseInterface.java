@@ -6,12 +6,18 @@
 package yourapus.database;
 
 import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import yourapus.models.Listing;
 import yourapus.models.Partido;
 import yourapus.models.Precios;
 import yourapus.models.Equipo;
 import java.util.ArrayList;
 import java.util.Arrays;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
 import yourapus.models.Usuario;
 
 /**
@@ -19,6 +25,10 @@ import yourapus.models.Usuario;
  * @author bear
  */
 public class DatabaseInterface {
+    InitialContext initial;
+    DataSource datasource;
+    Connection conn;
+    Listing clasico;
     
     public DatabaseInterface(){
         Equipo barsa = new Equipo("barsa");
@@ -56,7 +66,7 @@ public class DatabaseInterface {
         );
 
 
-        Listing clasico = new Listing(juegoClasico, casasClasico);
+        clasico = new Listing(juegoClasico, casasClasico);
         Listing realbetis = new Listing(juegoRealbetis, casasRealbetis);
         Listing realRayo = new Listing(juegoRealRayo, casasRealRayo);
 
@@ -84,15 +94,92 @@ public class DatabaseInterface {
     Usuario currentUser;
     ArrayList<Listing> partidosFavoritos;
     ArrayList<Listing> ultimosPartidos;
+public void iniciarConexion (){
+    try{
+    initial = new InitialContext();
+    datasource = (DataSource) initial.lookup("jdbc/myDatasource");
+    conn = datasource.getConnection();
+    }
+    catch(Exception E){
+        System.out.println("impossible conectar a la BBDD");
+    }
+}  
+
+
+
+
+public ArrayList<Equipo> getEquipos() throws SQLException{
+    iniciarConexion();
+    ArrayList<Equipo> equipos = new ArrayList<Equipo>();
+    String query = "Select * from equipos";
+    Statement st = conn.createStatement();
+    ResultSet rs = st.executeQuery(query);
+    while(rs.next()){
+        String name = rs.getString("nombre");
+        System.out.println("Equipo:" + name);
+        Equipo e = new Equipo(name);
+        equipos.add(e);
+        
+    }
+    conn.close();
+    return equipos;
+    
+    
+}
+public ArrayList<Listing> getPartidos() throws SQLException{
+    iniciarConexion();
+    ArrayList<Listing> lista = new ArrayList<Listing>();
+    
+    String query = "Select * from partidos";
+    Statement st = conn.createStatement();
+    ResultSet rs = st.executeQuery(query);
+    while(rs.next()){
+        
+        
+        ArrayList<Precios> preciosArray = new ArrayList<Precios>();
+        String local = rs.getString("local");
+       
+        String visitante = rs.getString("visitante");
+        String ganaVisitante = rs.getString("Cuota3");
+        String ganaLocal = rs.getString("Cuota1");
+        String empate = rs.getString("Cuota2");
+        String nombreCasaDeApuestas = rs.getString("casaDeApuestas");
+        Precios precio = new Precios(ganaVisitante,ganaLocal,empate,nombreCasaDeApuestas);
+        preciosArray.add(precio);
+        for (int i = 0; i <= 1; i++) {
+            rs.next();
+        ganaVisitante = rs.getString("Cuota3");
+        
+        ganaLocal = rs.getString("Cuota1");
+        empate = rs.getString("Cuota2");
+        nombreCasaDeApuestas = rs.getString("casaDeApuestas");
+        precio = new Precios(ganaVisitante,ganaLocal,empate,nombreCasaDeApuestas);
+       
+        preciosArray.add(precio);
+                
+        }
+        Equipo equipo1 = new Equipo(local);
+        Equipo equipo2 = new Equipo(visitante);
+        Partido partido = new Partido(equipo1,equipo2);
+        Listing listita = new Listing(partido,preciosArray);
+        
+        
+        lista.add(listita);
+        
+        
+    }
+    this.partidos=lista;
+    conn.close();
+    return lista;
+    
+} 
+    
+    
 
     
-    public ArrayList<Equipo> getEquipos(){
-        return this.equipos;
-    }
+  
     
-    public ArrayList<Listing> getPartidos(){
-        return this.partidos;
-    }
+   
      public ArrayList<Listing> getPartidos(String equipo){
          ArrayList<Listing> partidosEquipo = new ArrayList<>();
      

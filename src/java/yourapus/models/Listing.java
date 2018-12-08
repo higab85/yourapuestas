@@ -42,4 +42,8 @@ public class Listing implements Serializable {
     
     private Partido partido;
     private ArrayList<Precios> casasDeApuestas;
+
+    public long[] toArray() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
