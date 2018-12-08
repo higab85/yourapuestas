@@ -41,6 +41,10 @@
         <servlet-name>Logout</servlet-name>
         <servlet-class>yourapus.Logout</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Register</servlet-name>
+        <servlet-class>yourapus.Register</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Index</servlet-name>
         <url-pattern>/</url-pattern>
@@ -77,22 +81,22 @@
         <servlet-name>Logout</servlet-name>
         <url-pattern>/Logout</url-pattern>
     </servlet-mapping>
-  
+    <servlet-mapping>
+        <servlet-name>Register</servlet-name>
+        <url-pattern>/Register</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
-    
     <welcome-file-list>
         <welcome-file>faces/index.xhtml</welcome-file>
     </welcome-file-list>
-    
-      <error-page>
+    <error-page>
         <error-code>404</error-code>
         <location>/404error.html</location>
     </error-page>
-    
     <error-page>
         <error-code>500</error-code>
         <location>/500error.html</location>
