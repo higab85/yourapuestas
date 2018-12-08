@@ -116,11 +116,17 @@ public class EscogerPartidos extends HttpServlet {
     }// </editor-fold>
 
     private void mostrarPartidos(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //Utiliza DataBaseServlet para recuperar informacion de la bbdd
         request.setAttribute("cosa", "todosPartidos");
+        // include -- procesa el contenido de la servlet, pero esta no genera nada en este caso.
         request.getRequestDispatcher("/DatabaseServlet").include(request, response);
+        // recupera el atributo cosa que se lo ha dejado databaseservlet en el contexto
         ArrayList<Listing> partidos = (ArrayList<Listing>) getServletContext().getAttribute("cosa");
+        // carga en el contexto los partidos (clave/valor) para que los procese la vista como partidos
         getServletContext().setAttribute("partidos", partidos);
         RequestDispatcher rd = request.getRequestDispatcher("/faces/partidos.xhtml");
+        // rd.forward-->Carga el recurso, que es la vista y le pasa los partidos a partir de un atributo 
+        //(partidos). Y lo muestra por pantalla.
         rd.forward(request, response);
     }
 
@@ -140,6 +146,8 @@ public class EscogerPartidos extends HttpServlet {
         request.setAttribute("equipo", nombreEquipo);
         request.getRequestDispatcher("/DatabaseServlet").include(request, response);
         ArrayList<Listing> partidos = (ArrayList<Listing>) getServletContext().getAttribute("cosa");
+        if(partidos==null || partidos.size()==0)
+            throw new ServletException("El equipo " + nombreEquipo + " no tiene partidos" );
         getServletContext().setAttribute("partidos", partidos);
         RequestDispatcher rd = request.getRequestDispatcher("/faces/partidos.xhtml");
         rd.forward(request, response);
