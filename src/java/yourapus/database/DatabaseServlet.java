@@ -73,6 +73,8 @@ public class DatabaseServlet extends HttpServlet {
         getServletContext().setAttribute("cosa", cosa);
 
     }
+    
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
