@@ -60,7 +60,7 @@ public class Register extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-                String user_submitted = request.getParameter("user");
+        String user_submitted = request.getParameter("user");
         String password_submitted = request.getParameter("password");                     
         String email_submitted = request.getParameter("email");
         

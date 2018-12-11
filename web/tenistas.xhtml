@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:decorate template="base.xhtml">
+
+            <ui:define name="content">
+                
+                <!-- Hay que preguntar por session.getAtribute(Usuario) -->
+                <c:if test="${not empty application.getAttribute('usuario')}" >
+                    <h2>Equipos Favoritos</h2>
+                    <ui:repeat var="item" value="${application.getAttribute('usuario').equiposFavoritos}" > 
+                        <div class="card" style="width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title">#{item.nombre}</h5>
+                                <a href="/yourapuestas/escogerpartidos?opcion=3" class="btn btn-primary">Ver partidos</a>
+                                <a href="marcarfavorito?nombreEquipo=0" class="btn btn-secondary"> Marcar favorito</a>
+                            </div>
+                        </div>
+                    </ui:repeat>
+                </c:if>
+                <!-- Equipos tiene que ser a nivel de request, no de aplicación
+                -->
+                <ui:repeat var="item" value="${application.getAttribute('tenistas')}" > 
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">#{item.nombre}</h5>
+
+                            <h:outputLink value="/yourapuestas/escogerpartidos" class="btn btn-primary">
+                                <f:param name="opcion" value="6"></f:param>
+                                <f:param name="nombreTenista" value="#{item.nombre}"></f:param>
+                                Ver Partidos
+                            </h:outputLink>
+
+             
+                            <a href="marcarfavorito?nombreEquipo=0" class="btn btn-secondary"> Marcar favorito</a>
+                        </div>
+                    </div>
+                </ui:repeat>
+
+            </ui:define>
+
+        </ui:decorate>
+
+    </body>
+</html>

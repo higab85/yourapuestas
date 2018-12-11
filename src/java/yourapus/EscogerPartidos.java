@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import yourapus.models.Equipo;
+import yourapus.models.Tenista;
 
 @WebServlet(name = "EscogerPartidos", urlPatterns = {"/EscogerPartidos"})
 public class EscogerPartidos extends HttpServlet {
@@ -25,7 +26,8 @@ public class EscogerPartidos extends HttpServlet {
     private static final int PARTIDOS = 1;
     private static final int EQUIPOS = 2;
     private static final int VER_PARTIDOS_EQUIPO =3;
-    private static final int PARTIDOS_TENIS = 4;
+    private static final int TENISTAS = 4;
+    private static final int PARTIDOS_TENIS = 6;
     private static final int PARTIDOS_FAVORITOS = 5;
 
     /**
@@ -55,6 +57,11 @@ public class EscogerPartidos extends HttpServlet {
             case VER_PARTIDOS_EQUIPO:
                 mostrarPartidosEquipo(request, response);
                 break;
+                
+            case TENISTAS:
+                mostrarTenistas(request, response);
+                break;  
+                
                 
             case PARTIDOS_TENIS:
                 break;
@@ -150,6 +157,24 @@ public class EscogerPartidos extends HttpServlet {
             throw new ServletException("El equipo " + nombreEquipo + " no tiene partidos" );
         getServletContext().setAttribute("partidos", partidos);
         RequestDispatcher rd = request.getRequestDispatcher("/faces/partidos.xhtml");
+        rd.forward(request, response);
+    }
+
+    private void mostrarTenistas(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String pagina;
+        
+        try {
+            request.setAttribute("cosa", "tenistas");
+            request.getRequestDispatcher("/DatabaseServlet").include(request, response);
+            ArrayList<Tenista> tenistas = (ArrayList<Tenista>) getServletContext().getAttribute("cosa");
+            getServletContext().setAttribute("tenistas", tenistas);
+            pagina = "/faces/tenistas.xhtml";
+            
+        } catch (Exception e){
+            pagina = "404error.html";
+        }
+
+        RequestDispatcher rd = request.getRequestDispatcher(pagina);
         rd.forward(request, response);
     }
 
