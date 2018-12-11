@@ -64,6 +64,7 @@ public class EscogerPartidos extends HttpServlet {
                 
                 
             case PARTIDOS_TENIS:
+                mostrarPartidosTernis(request,response);
                 break;
 
         }
@@ -171,10 +172,25 @@ public class EscogerPartidos extends HttpServlet {
             pagina = "/faces/tenistas.xhtml";
             
         } catch (Exception e){
-            pagina = "404error.html";
+            pagina = "404error.hml";
         }
 
         RequestDispatcher rd = request.getRequestDispatcher(pagina);
+        rd.forward(request, response);
+    }
+
+    private void mostrarPartidosTernis(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+         //Utiliza DataBaseServlet para recuperar informacion de la bbdd
+        request.setAttribute("cosa", "todosPartidosTenis");
+        // include -- procesa el contenido de la servlet, pero esta no genera nada en este caso.
+        request.getRequestDispatcher("/DatabaseServlet").include(request, response);
+        // recupera el atributo cosa que se lo ha dejado databaseservlet en el contexto
+        ArrayList<Listing> partidos = (ArrayList<Listing>) getServletContext().getAttribute("cosa");
+        // carga en el contexto los partidos (clave/valor) para que los procese la vista como partidos
+        getServletContext().setAttribute("partidosTenis", partidos);
+        RequestDispatcher rd = request.getRequestDispatcher("/faces/todosPartidosTenis.xhtml");
+        // rd.forward-->Carga el recurso, que es la vista y le pasa los partidos a partir de un atributo 
+        //(partidos). Y lo muestra por pantalla.
         rd.forward(request, response);
     }
 
