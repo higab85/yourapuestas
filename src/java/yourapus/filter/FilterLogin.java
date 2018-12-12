@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author diegoechaure
  */
-//@WebFilter(filterName = "FilterLogin",urlPatterns = {"/Login"})
+@WebFilter(filterName = "FilterLogin",urlPatterns = {"/faces/login.xhtml"})
 public class FilterLogin implements Filter{
 
     @Override
@@ -32,14 +32,22 @@ public class FilterLogin implements Filter{
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
        HttpServletRequest session = (HttpServletRequest)request;
        HttpServletResponse nopasa = (HttpServletResponse)response;
-       if(((String)session.getSession().getAttribute("logeado")).equals("true")){
-           nopasa.sendRedirect("/yourapuestas");
-           
-       }
-       else{
-           chain.doFilter(request, response);
-       }
+       try{
+        if(((String)session.getSession().getAttribute("session")).equals("yes")){
+            nopasa.sendRedirect("/yourapuestas");
+            System.out.println("Not on my watch");
+
+        }
+        else{
+             System.out.println("Go now");
+            chain.doFilter(request, response);
+        }
+       }catch (NullPointerException e){
+            System.out.println("No attribute");
+            chain.doFilter(request, response);
+        }
     }
+    
 
     @Override
     public void destroy() {

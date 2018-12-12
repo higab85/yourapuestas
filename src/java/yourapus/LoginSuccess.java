@@ -16,6 +16,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import yourapus.models.Usuario;
 
 @WebServlet(name = "Login3Success", urlPatterns = {"/Login3Success"})
@@ -49,6 +50,8 @@ public class LoginSuccess extends HttpServlet {
         getServletContext().setAttribute("usuario", usuario);  
         
         getServletContext().setAttribute("session", "yes");
+        HttpSession session = request.getSession();
+        session.setAttribute("session", "yes");
         //return response
         response.sendRedirect("/yourapuestas");
     }
