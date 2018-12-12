@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
+import yourapus.models.Tenista;
 import yourapus.models.Usuario;
 
 /**
@@ -94,6 +95,7 @@ public class DatabaseInterface {
     Usuario currentUser;
     ArrayList<Listing> partidosFavoritos;
     ArrayList<Listing> ultimosPartidos;
+    
 public void iniciarConexion (){
     try{
     initial = new InitialContext();
@@ -126,6 +128,27 @@ public ArrayList<Equipo> getEquipos() throws SQLException{
     
     
 }
+
+
+public ArrayList<Tenista> getTenistas() throws SQLException{
+    iniciarConexion();
+    ArrayList<Tenista> tenistas = new ArrayList<Tenista>();
+    String query = "Select * from tenistas";
+    Statement st = conn.createStatement();
+    ResultSet rs = st.executeQuery(query);
+    while(rs.next()){
+        int id = rs.getInt("id");
+        String name = rs.getString("nombre");
+        System.out.println("Tenista:" + name);
+        Tenista t = new Tenista(id,name);
+        tenistas.add(t);
+        
+    }
+    conn.close();
+    return tenistas;
+    
+    
+}
 public ArrayList<Listing> getPartidos() throws SQLException{
     iniciarConexion();
     ArrayList<Listing> lista = new ArrayList<Listing>();
@@ -138,7 +161,6 @@ public ArrayList<Listing> getPartidos() throws SQLException{
         
         ArrayList<Precios> preciosArray = new ArrayList<Precios>();
         String local = rs.getString("local");
-       
         String visitante = rs.getString("visitante");
         String ganaVisitante = rs.getString("Cuota3");
         String ganaLocal = rs.getString("Cuota1");
@@ -146,16 +168,17 @@ public ArrayList<Listing> getPartidos() throws SQLException{
         String nombreCasaDeApuestas = rs.getString("casaDeApuestas");
         Precios precio = new Precios(ganaVisitante,ganaLocal,empate,nombreCasaDeApuestas);
         preciosArray.add(precio);
+        
         for (int i = 0; i <= 1; i++) {
             rs.next();
-        ganaVisitante = rs.getString("Cuota3");
-        
-        ganaLocal = rs.getString("Cuota1");
-        empate = rs.getString("Cuota2");
-        nombreCasaDeApuestas = rs.getString("casaDeApuestas");
-        precio = new Precios(ganaVisitante,ganaLocal,empate,nombreCasaDeApuestas);
-       
-        preciosArray.add(precio);
+            ganaVisitante = rs.getString("Cuota3");
+
+            ganaLocal = rs.getString("Cuota1");
+            empate = rs.getString("Cuota2");
+            nombreCasaDeApuestas = rs.getString("casaDeApuestas");
+            precio = new Precios(ganaVisitante,ganaLocal,empate,nombreCasaDeApuestas);
+
+            preciosArray.add(precio);
                 
         }
         Equipo equipo1 = new Equipo(local);

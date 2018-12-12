@@ -66,6 +66,11 @@ public class DatabaseServlet extends HttpServlet {
                 cosa = db.getEquipos();
                 break;
                 
+             case "tenistas":
+                cosa = db.getTenistas();
+                break;   
+                
+                
             case "ultimosPartidos":
                 cosa = db.getUltimosPartidos();
                 break;  
